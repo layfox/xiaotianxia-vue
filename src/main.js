@@ -1,6 +1,7 @@
 import '@babel/polyfill'
 import Vue from 'vue'
 import ElementUI from 'element-ui'
+import md5 from 'js-md5'
 
 import '@/config/global'
 import '@/lin/mixin'
@@ -23,6 +24,7 @@ import '@/assets/style/realize/element-variable.scss'
 import 'element-ui/lib/theme-chalk/display.css'
 
 Vue.config.productionTip = false
+Vue.prototype.$md5 = md5
 
 Vue.use(ElementUI)
 Vue.use(LinNotify, {

@@ -1,3 +1,4 @@
+import md5 from 'js-md5'
 import _axios, { post, get, put } from '@/lin/plugin/axios'
 import { saveTokens } from '../util/token'
 import store from '@/store'
@@ -8,6 +9,8 @@ export default class User {
    * @param {object} data 注册信息
    */
   static register(data) {
+    data.password = md5(data.password)
+    data.confirm_password = md5(data.confirm_password)
     return _axios({
       method: 'post',
       url: 'cms/user/register',
@@ -24,7 +27,7 @@ export default class User {
   static async getToken(username, password) {
     const tokens = await post('cms/user/login', {
       username,
-      password,
+      password: md5(password),
     })
     saveTokens(tokens.access_token, tokens.refresh_token)
     return tokens
@@ -56,9 +59,9 @@ export default class User {
    */
   static updatePassword({ old_password, new_password, confirm_password }) {
     return put('cms/user/change_password', {
-      new_password,
-      confirm_password,
-      old_password,
+      new_password: md5(new_password),
+      confirm_password: md5(confirm_password),
+      old_password: md5(old_password),
     })
   }
 }
