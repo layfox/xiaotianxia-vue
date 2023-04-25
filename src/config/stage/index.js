@@ -1,12 +1,13 @@
 import adminConfig from './admin'
 import bookConfig from './book' // 引入图书管理路由文件
-import pluginsConfig from './plugin'
+import channelConfig from './channel' // 引入图书管理路由文件
+// import pluginsConfig from './plugin'
 import Utils from '@/lin/util/util'
 
 // eslint-disable-next-line import/no-mutable-exports
 let homeRouter = [
   {
-    title: '林间有风',
+    title: '晓天下',
     type: 'view',
     name: Symbol('about'),
     route: '/about',
@@ -45,34 +46,35 @@ let homeRouter = [
     icon: 'iconfont icon-rizhiguanli',
   },
   bookConfig,
+  channelConfig,
   adminConfig,
 ]
 
-const plugins = [...pluginsConfig]
+// const plugins = [...pluginsConfig]
 
 // 筛除已经被添加的插件
-function filterPlugin(data) {
-  if (plugins.length === 0) {
-    return
-  }
-  if (Array.isArray(data)) {
-    data.forEach(item => {
-      filterPlugin(item)
-    })
-  } else {
-    const findResult = plugins.findIndex(item => data === item)
-    if (findResult >= 0) {
-      plugins.splice(findResult, 1)
-    }
-    if (data.children) {
-      filterPlugin(data.children)
-    }
-  }
-}
+// function filterPlugin(data) {
+//   if (plugins.length === 0) {
+//     return
+//   }
+//   if (Array.isArray(data)) {
+//     data.forEach(item => {
+//       filterPlugin(item)
+//     })
+//   } else {
+//     const findResult = plugins.findIndex(item => data === item)
+//     if (findResult >= 0) {
+//       plugins.splice(findResult, 1)
+//     }
+//     if (data.children) {
+//       filterPlugin(data.children)
+//     }
+//   }
+// }
 
-filterPlugin(homeRouter)
+// filterPlugin(homeRouter)
 
-homeRouter = homeRouter.concat(plugins)
+// homeRouter = homeRouter.concat(plugins)
 
 // 处理顺序
 homeRouter = Utils.sortByOrder(homeRouter)
